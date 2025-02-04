@@ -10,12 +10,15 @@ Content-Type: application/json
 GET http://localhost:3000/api/toto/
 
 ###
+GET http://localhost:3000/api/qcm/
+ 
+###
 POST http://localhost:3000/api/qcm
 Content-Type: application/json
 
 {
     "data": {
-        "titre": "QCM sur la Géographie",
+        "titre": "QCM sur l'Histoire",
         "imageSrc": null
     }
 }
@@ -26,12 +29,28 @@ Content-Type: application/json
 
 {
     "data": {
-        "content": "Dans quel pays se trouve le mont Everest ?",
+        "content": "Quelle est la capitale la plus haute du monde ?",
         "choices": [
-            { "content": "Chine", "isCorrect": true },
-            { "content": "Inde", "isCorrect": false },
-            { "content": "Népal", "isCorrect": true },
-            { "content": "Bhoutan", "isCorrect": false }
+            { "content": "Quito", "isCorrect": false },
+            { "content": "La Paz", "isCorrect": true },
+            { "content": "Katmandou", "isCorrect": false },
+            { "content": "Bogotá", "isCorrect": false }
+        ]
+    }
+}
+
+###
+POST http://localhost:3000/api/qcm/2/questions
+Content-Type: application/json
+
+{
+    "data": {
+        "content": "Quelle(s) invention(s) est/sont attribuée(s) à Gutenberg ?",
+        "choices": [
+            { "content": "L'imprimerie à caractères mobiles", "isCorrect": true },
+            { "content": "La presse typographique", "isCorrect": true },
+            { "content": "La machine à vapeur", "isCorrect": false },
+            { "content": "La boussole", "isCorrect": false }
         ]
     }
 }
