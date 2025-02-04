@@ -1,0 +1,10 @@
+POST http://localhost:3000/api/toto
+Content-Type: application/json
+
+{
+    "data": {
+        "name": "melissa"
+        }
+}
+###
+GET http://localhost:3000/api/toto/
