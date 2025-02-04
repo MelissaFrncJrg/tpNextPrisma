@@ -8,3 +8,30 @@ Content-Type: application/json
 }
 ###
 GET http://localhost:3000/api/toto/
+
+###
+POST http://localhost:3000/api/qcm
+Content-Type: application/json
+
+{
+    "data": {
+        "titre": "QCM sur la Géographie",
+        "imageSrc": null
+    }
+}
+
+###
+POST http://localhost:3000/api/qcm/1/questions
+Content-Type: application/json
+
+{
+    "data": {
+        "content": "Dans quel pays se trouve le mont Everest ?",
+        "choices": [
+            { "content": "Chine", "isCorrect": true },
+            { "content": "Inde", "isCorrect": false },
+            { "content": "Népal", "isCorrect": true },
+            { "content": "Bhoutan", "isCorrect": false }
+        ]
+    }
+}

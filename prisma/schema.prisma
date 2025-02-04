@@ -1,3 +1,9 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,18 +13,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  authorId  Int
-  User      User    @relation(fields: [authorId], references: [id])
-}
 
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
   name  String?
-  Post  Post[]
+  responses Response[]
+}
+
+model QCM {
+  id        Int     @id @default(autoincrement())
+  titre     String
+  imageSrc  String?
+  questions Question[]
+}
+
+model Question {
+  id        Int     @id @default(autoincrement())
+  content   String
+  qcmId     Int
+  qcm       QCM      @relation(fields: [qcmId], references: [id])
+  choices   Choix[]
+}
+
+model Choix {
+  id          Int     @id @default(autoincrement())
+  content     String
+  isCorrect   Boolean
+  questionId  Int
+  question    Question @relation(fields: [questionId], references: [id])
+  responses   Response[]
+}
+
+model Response {
+  id      Int     @id @default(autoincrement())
+  value   Boolean
+  choixId Int
+  choix   Choix   @relation(fields: [choixId], references: [id])
+  userId  Int
+  user    User    @relation(fields: [userId], references: [id])
 }
