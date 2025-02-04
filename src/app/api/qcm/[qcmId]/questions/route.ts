@@ -5,24 +5,23 @@ const prisma = new PrismaClient();
 
 export const POST = async (
   req: NextRequest,
-  context: { params: Promise<{ qcmId: string }> }
+  { params }: { params: Promise<{ qcmId: string }> }
 ) => {
-  const { qcmId } = await context.params;
-  const parsedQcmId = parseInt(qcmId, 10);
+  const resolvedParams = await params;
+  const qcmId = parseInt(resolvedParams.qcmId, 10);
 
-  if (isNaN(parsedQcmId)) {
+  if (isNaN(qcmId)) {
     return NextResponse.json({ error: "Invalid QCM ID" }, { status: 400 });
   }
 
-  const { data } = await req.json();
   const {
     content,
     choices,
   }: { content: string; choices: { content: string; isCorrect: boolean }[] } =
-    data;
+    await req.json();
 
   const qcm = await prisma.qCM.findUnique({
-    where: { id: parsedQcmId },
+    where: { id: qcmId },
   });
 
   if (!qcm) {
@@ -32,7 +31,7 @@ export const POST = async (
   const newQuestion = await prisma.question.create({
     data: {
       content,
-      qcmId: parsedQcmId,
+      qcmId,
       choices: {
         create: choices.map((choice) => ({
           content: choice.content,
